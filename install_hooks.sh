@@ -37,7 +37,7 @@ copy_hooks() {
     for hook in $HOOKS
     do
         echo "Copying $hook to $1/hooks."
-        cp -i -- "$SCRIPTPATH/$hook" "$1/hooks"
+        cp -i -- "$SCRIPTPATH/$hook" "$1/hooks" || true
     done
 
     echo ""
@@ -46,7 +46,7 @@ copy_hooks() {
     do
         if [ ! -x "$1/hooks/$hook" ] ; then
             echo "$hook is not executable. Fix it by calling"
-            echo "sudo chmod +x $1/hooks/$hook"
+            echo "chmod +x $1/hooks/$hook"
         else
             echo "$hook OK."
         fi
@@ -60,7 +60,7 @@ echo ""
 if [ $# = 1 ] ; then
     if [ -d "$1/.git" ] ; then
         echo "Copying prerequisites."
-        cp -i -- "$SCRIPTPATH/canonicalize_filename.sh" "$1/.git/hooks/"
+        cp -i -- "$SCRIPTPATH/canonicalize_filename.sh" "$1/.git/hooks/" || true
         echo ""
         copy_hooks "$1/.git"
         echo ""
